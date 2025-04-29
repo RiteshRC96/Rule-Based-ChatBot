@@ -16,7 +16,6 @@ bot_avatar = image_to_base64("static/bot.png")
 groq_api_key = "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"
 bot = SmartChatBot(groq_api_key)
 
-
 # Page config
 st.set_page_config(page_title="GenAI SmartBot", page_icon="🤖", layout="wide")
 st.title("🤖 GenAI SmartBot - Powered by Groq")
@@ -62,32 +61,14 @@ if user_input:
     # Render user's message
     render_message("user", user_input)
 
-    # Bot typing
-    with st.spinner("Bot is typing..."):
-        bot_response = bot.get_response(user_input)
+    # Bot response (with optimization)
+    bot_response = bot.get_response(user_input)
 
-        # Typing effect (batched)
-        bot_message_placeholder = st.empty()
-        batch_size = 3
-        delay = 0.003
+    # Render bot's full message at once (no typing effect)
+    render_message("bot", bot_response)
 
-        for i in range(0, len(bot_response), batch_size):
-            typed_text = bot_response[:i + batch_size]
-            bot_message_placeholder.markdown(
-                f'''
-                <div style="display:flex; justify-content:flex-start; margin-right:auto; margin-bottom:10px;">
-                    <div style="background-color:#e0f7fa; padding:10px 14px; border-radius:18px; max-width:75%; display:flex; align-items:center;">
-                        <img src="{bot_avatar}" style="width:30px;height:30px;border-radius:50%; margin-right:10px;"/>
-                        <span style="color:#000; word-wrap:break-word;">{typed_text}</span>
-                    </div>
-                </div>
-                ''',
-                unsafe_allow_html=True
-            )
-            time.sleep(delay)
-
-        # Save bot response
-        st.session_state.messages.append(("bot", bot_response))
+    # Save bot response
+    st.session_state.messages.append(("bot", bot_response))
 
 else:
     # No new input: show all messages
