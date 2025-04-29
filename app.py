@@ -50,7 +50,7 @@ def render_message(sender, message):
     )
 
 # Function to display typing effect for bot response
-def display_typing_effect(bot_response, delay=0.07):
+def display_typing_effect(bot_response, delay=0.05):
     bot_placeholder = st.empty()
     typed_text = ""
     for char in bot_response:
