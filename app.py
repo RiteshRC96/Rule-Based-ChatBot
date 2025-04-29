@@ -66,8 +66,8 @@ if user_input:
 
     # Typing effect (batched)
     bot_message_placeholder = st.empty()
-    batch_size = 3  # Number of characters per batch
-    delay = 0.05  # Delay between batches (in seconds)
+    batch_size = 5  # Number of characters per batch
+    delay = 0.002  # Delay between batches (in seconds)
 
     # Display the bot response character by character
     for i in range(0, len(bot_response), batch_size):
