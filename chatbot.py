@@ -69,7 +69,7 @@ class SmartChatBot:
 
         # ✅ Updated model name to the supported one
         self.llm = ChatGroq(
-            groq_api_key=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,
+            groq_api_key="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",
             model="llama3-70b-8192"  # <--- Updated model name here
         )
 
