@@ -61,11 +61,29 @@ if user_input:
     # Render user's message
     render_message("user", user_input)
 
-    # Bot response (with optimization)
+    # Bot response (with typing effect)
     bot_response = bot.get_response(user_input)
 
-    # Render bot's full message at once (no typing effect)
-    render_message("bot", bot_response)
+    # Typing effect (batched)
+    bot_message_placeholder = st.empty()
+    batch_size = 3  # Number of characters per batch
+    delay = 0.05  # Delay between batches (in seconds)
+
+    # Display the bot response character by character
+    for i in range(0, len(bot_response), batch_size):
+        typed_text = bot_response[:i + batch_size]
+        bot_message_placeholder.markdown(
+            f'''
+            <div style="display:flex; justify-content:flex-start; margin-right:auto; margin-bottom:10px;">
+                <div style="background-color:#e0f7fa; padding:10px 14px; border-radius:18px; max-width:75%; display:flex; align-items:center;">
+                    <img src="{bot_avatar}" style="width:30px;height:30px;border-radius:50%; margin-right:10px;"/>
+                    <span style="color:#000; word-wrap:break-word;">{typed_text}</span>
+                </div>
+            </div>
+            ''',
+            unsafe_allow_html=True
+        )
+        time.sleep(delay)
 
     # Save bot response
     st.session_state.messages.append(("bot", bot_response))
