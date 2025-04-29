@@ -16,41 +16,21 @@ bot_avatar = image_to_base64("static/bot.png")
 groq_api_key = st.secrets["GROQ_API_KEY"]
 bot = SmartChatBot(groq_api_key)
 
-# Streamlit page config
+# Page config
 st.set_page_config(page_title="GenAI SmartBot", page_icon="🤖", layout="wide")
 st.title("🤖 GenAI SmartBot - Powered by Groq")
 
-# Sidebar
-st.sidebar.title("📚 Chat History")
-
+# Chat state
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Sidebar download button
-if st.sidebar.button("📄 Generate Chat File"):
-    chat_content = ""
-    for sender, message in st.session_state.messages:
-        sender_name = "You" if sender == "user" else "Bot"
-        chat_content += f"{sender_name}: {message}\n"
-    st.sidebar.download_button(
-        label="Download Chat",
-        data=chat_content,
-        file_name="chat_history.txt",
-        mime="text/plain"
-    )
-
-# Sidebar chat history
-for sender, message in st.session_state.messages:
-    sender_name = "You" if sender == "user" else "Bot"
-    st.sidebar.markdown(f"**{sender_name}:** {message}")
-
-# Main chat area
+# Chat area
 st.markdown("### 💬 Chat below:")
 
-# User input at bottom (Streamlit handles this natively with st.chat_input)
+# Input box
 user_input = st.chat_input("Type your message here...")
 
-# Function to render one message
+# Function to render a message
 def render_message(sender, message):
     avatar = user_avatar if sender == "user" else bot_avatar
     bg_color = "#90EE90" if sender == "user" else "#FFB6C1"
@@ -69,26 +49,26 @@ def render_message(sender, message):
         ''', unsafe_allow_html=True
     )
 
-# Handle input
+# Handle chat
 if user_input:
-    # Save user's message to session
+    # Save user message
     st.session_state.messages.append(("user", user_input))
 
-    # Render all previous messages
+    # Render previous messages
     for sender, message in st.session_state.messages[:-1]:
         render_message(sender, message)
 
-    # Render new user message
+    # Render user's message
     render_message("user", user_input)
 
-    # Bot thinking...
+    # Bot typing
     with st.spinner("Bot is typing..."):
         bot_response = bot.get_response(user_input)
 
-        # Optimized typing effect
+        # Typing effect (batched)
         bot_message_placeholder = st.empty()
         batch_size = 5
-        delay = 0.013
+        delay = 0.003
 
         for i in range(0, len(bot_response), batch_size):
             typed_text = bot_response[:i + batch_size]
@@ -105,10 +85,10 @@ if user_input:
             )
             time.sleep(delay)
 
-        # Save final bot message
+        # Save bot response
         st.session_state.messages.append(("bot", bot_response))
 
 else:
-    # No new input: display full history
+    # No new input: show all messages
     for sender, message in st.session_state.messages:
         render_message(sender, message)
