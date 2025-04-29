@@ -50,13 +50,13 @@ def render_message(sender, message):
     )
 
 # Function to display typing effect for bot response
-def display_typing_effect(bot_response, delay=0.02):
+def display_typing_effect(bot_response, delay=0.2):
     bot_placeholder = st.empty()
     typed_text = ""
     for char in bot_response:
         typed_text += char
         bot_placeholder.markdown(
-            f'<div style="background-color:#f1f0f0;padding:10px;border-radius:10px;margin-bottom:5px;width:fit-content;">'
+            f'<div style="background-color:#FFB6C1;padding:10px;border-radius:10px;margin-bottom:5px;width:fit-content;">'
             f"**Bot:** {typed_text}"
             f'</div>', unsafe_allow_html=True
         )
