@@ -49,6 +49,19 @@ def render_message(sender, message):
         ''', unsafe_allow_html=True
     )
 
+# Function to display typing effect for bot response
+def display_typing_effect(bot_response, delay=0.02):
+    bot_placeholder = st.empty()
+    typed_text = ""
+    for char in bot_response:
+        typed_text += char
+        bot_placeholder.markdown(
+            f'<div style="background-color:#f1f0f0;padding:10px;border-radius:10px;margin-bottom:5px;width:fit-content;">'
+            f"**Bot:** {typed_text}"
+            f'</div>', unsafe_allow_html=True
+        )
+        time.sleep(delay)
+
 # Handle chat
 if user_input:
     # Save user message
@@ -63,19 +76,8 @@ if user_input:
 
     # Bot response (with typing effect)
     bot_response = bot.get_response(user_input)
+    display_typing_effect(bot_response)
 
-    def display_typing_effect(bot_response, delay=0.02):
-    bot_placeholder = st.empty()
-    typed_text = ""
-    for char in bot_response:
-        typed_text += char
-        bot_placeholder.markdown(
-            f'<div style="background-color:#f1f0f0;padding:10px;border-radius:10px;margin-bottom:5px;width:fit-content;">'
-            f"**Bot:** {typed_text}"
-            f'</div>', unsafe_allow_html=True
-        )
-        time.sleep(delay)
-        
     # Save bot response
     st.session_state.messages.append(("bot", bot_response))
 
