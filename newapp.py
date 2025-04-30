@@ -47,10 +47,7 @@ for sender, message in st.session_state.messages:
 # Main chat area
 st.markdown("### 💬 Chat below:")
 
-# User input
-user_input = st.chat_input("Type your message here...")
-
-# Function to render one message
+# Function to render a single message
 def render_message(sender, message):
     avatar = user_avatar if sender == "user" else bot_avatar
     bg_color = "#90EE90" if sender == "user" else "#FFB6C1"
@@ -69,7 +66,7 @@ def render_message(sender, message):
         ''', unsafe_allow_html=True
     )
 
-# Typing effect for bot response
+# Typing effect for bot
 def display_typing_effect(bot_response, delay=0.03):
     bot_placeholder = st.empty()
     typed_text = ""
@@ -82,17 +79,19 @@ def display_typing_effect(bot_response, delay=0.03):
         )
         time.sleep(delay)
 
-# Handle input
-if user_input:
-    st.session_state.messages.append(("user", user_input))
-    render_message("user", user_input)
+# User input
+user_input = st.chat_input("Type your message here...")
 
+# If new user input is received
+if user_input:
+    # Append user message
+    st.session_state.messages.append(("user", user_input))
+    
+    # Get bot response
     with st.spinner("Bot is typing..."):
         bot_response = bot.get_response(user_input)
-        display_typing_effect(bot_response)
         st.session_state.messages.append(("bot", bot_response))
 
-# Display full chat history (when there's no new input)
-if not user_input:
-    for sender, message in st.session_state.messages:
-        render_message(sender, message)
+# Always render full chat history
+for sender, message in st.session_state.messages:
+    render_message(sender, message)
