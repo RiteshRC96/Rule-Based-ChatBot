@@ -30,27 +30,30 @@ Welcome to the enhanced version of GenAI SmartBot, now with a feature-rich inter
 
 ---
 
-
 🚀 Getting Started
 
 1. Switch to Updated Branch
-
+```bash
 git checkout updatedBot
+```
 
 2. Install Dependencies
-
+```bash
 pip install -r requirements.txt
+```
 
 3. Run the Enhanced Chatbot
-
-streamlit run chatbot_app_sidebar.py
+```bash
+streamlit run newapp.py
+```
 
 ---
 
-
 🧪 Run Unit Tests
 
+```bash
 pytest test_chatbot.py
+```
 
 ---
 
@@ -66,7 +69,9 @@ pytest test_chatbot.py
 
 You can switch back to the clean UI (without sidebar) on the main branch:
 
+```bash
 git checkout main
+```
 
 ---
 
@@ -80,5 +85,5 @@ MIT License
 
 👨‍💻 Author
 
-Created by Your Name
+Built with ❤️ by [Ritesh Chougule](https://github.com/RiteshRC96)
 
