@@ -13,12 +13,12 @@ user_avatar = image_to_base64("static/user.png")
 bot_avatar = image_to_base64("static/bot.png")
 
 # Initialize bot
-groq_api_key = st.secrets["GROQ_API_KEY"]
+groq_api_key = "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"
 bot = SmartChatBot(groq_api_key)
 
 # Streamlit page config
 st.set_page_config(page_title="GenAI SmartBot", page_icon="🤖", layout="wide")
-st.title("🤖 GenAI SmartBot - Powered by Groq")
+st.title("🤖 Rule Based Chat Bot")
 
 # Sidebar
 st.sidebar.title("📚 Chat History")
@@ -47,7 +47,7 @@ for sender, message in st.session_state.messages:
 # Main chat area
 st.markdown("### 💬 Chat below:")
 
-# User input at bottom (Streamlit handles this natively with st.chat_input)
+# User input
 user_input = st.chat_input("Type your message here...")
 
 # Function to render one message
@@ -69,46 +69,30 @@ def render_message(sender, message):
         ''', unsafe_allow_html=True
     )
 
+# Typing effect for bot response
+def display_typing_effect(bot_response, delay=0.03):
+    bot_placeholder = st.empty()
+    typed_text = ""
+    for char in bot_response:
+        typed_text += char
+        bot_placeholder.markdown(
+            f'<div style="background-color:#FFB6C1;padding:10px;border-radius:10px;margin-bottom:5px;width:fit-content;">'
+            f"**Bot:** {typed_text}"
+            f'</div>', unsafe_allow_html=True
+        )
+        time.sleep(delay)
+
 # Handle input
 if user_input:
-    # Save user's message to session
     st.session_state.messages.append(("user", user_input))
-
-    # Render all previous messages
-    for sender, message in st.session_state.messages[:-1]:
-        render_message(sender, message)
-
-    # Render new user message
     render_message("user", user_input)
 
-    # Bot thinking...
     with st.spinner("Bot is typing..."):
         bot_response = bot.get_response(user_input)
-
-        # Optimized typing effect
-        bot_message_placeholder = st.empty()
-        batch_size = 5
-        delay = 0.013
-
-        for i in range(0, len(bot_response), batch_size):
-            typed_text = bot_response[:i + batch_size]
-            bot_message_placeholder.markdown(
-                f'''
-                <div style="display:flex; justify-content:flex-start; margin-right:auto; margin-bottom:10px;">
-                    <div style="background-color:#e0f7fa; padding:10px 14px; border-radius:18px; max-width:75%; display:flex; align-items:center;">
-                        <img src="{bot_avatar}" style="width:30px;height:30px;border-radius:50%; margin-right:10px;"/>
-                        <span style="color:#000; word-wrap:break-word;">{typed_text}</span>
-                    </div>
-                </div>
-                ''',
-                unsafe_allow_html=True
-            )
-            time.sleep(delay)
-
-        # Save final bot message
+        display_typing_effect(bot_response)
         st.session_state.messages.append(("bot", bot_response))
 
-else:
-    # No new input: display full history
+# Display full chat history (when there's no new input)
+if not user_input:
     for sender, message in st.session_state.messages:
         render_message(sender, message)
