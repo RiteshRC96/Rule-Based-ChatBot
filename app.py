@@ -18,7 +18,7 @@ bot = SmartChatBot(groq_api_key)
 
 # Page config
 st.set_page_config(page_title="GenAI SmartBot", page_icon="🤖", layout="wide")
-st.title("🤖 GenAI SmartBot - Powered by Groq")
+st.title("🤖 Rule Based Chat Bot")
 
 # Chat state
 if "messages" not in st.session_state:
