@@ -61,7 +61,7 @@ pytest test_chatbot.py
 ---
 
 ## 🖼️ Demo
-![Chatbot Demo](.static/chatbot_demo.gif)
+![Chatbot Demo](/static/chatbot_demo.gif)
 ---
 
 ## 🌱 Check Enhanced Version
