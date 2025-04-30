@@ -14,6 +14,9 @@ Welcome to the enhanced version of GenAI SmartBot, now with a feature-rich inter
 
 🧪 Still supports pytest testing via test_chatbot.py
 
+🔥Test the app here :-
+https://rule-based-chatbot-updated.streamlit.app/
+
 ---
 
 
