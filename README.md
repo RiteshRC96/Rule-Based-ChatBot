@@ -1,7 +1,8 @@
 # 🤖 GenAI SmartBot (Main Branch)
 
 Welcome to **GenAI SmartBot**, a simple and efficient **rule-based chatbot** built with Python and Streamlit. This version represents the **core chatbot** **without sidebar enhancements**—ideal for those looking for a minimalistic, clean chat interface.
-Test the app here :-
+
+🔥Test the app here :-
 https://rule-based-chatbot-ritesh.streamlit.app/
 
 ---
