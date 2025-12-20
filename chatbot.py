@@ -7,7 +7,7 @@ class SmartChatBot:
         self.patterns = {
            r'hi|hello|hey|good morning|good afternoon': "Hello! 👋 How can I assist you today?",
             r'how are you': "I'm functioning perfectly! Thanks for asking. 😄",
-            r'what is your name|who are you': "I'm SmartBot 🤖, your helpful assistant.",
+            r'what is your name|who are you': "I'm SmartBot 🤖,your helpful assistant. made by Ritesh",
             r'bye|goodbye|see you': "Goodbye! 👋 Stay safe!",
             r'thank you|thanks': "You're welcome! 🙌",
             r'who created you|who built you': "I was built by a talented developer! 🧑‍💻",
