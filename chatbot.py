@@ -1,6 +1,6 @@
 import re
 from langchain_groq import ChatGroq
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 
 class SmartChatBot:
     def __init__(self, groq_api_key):
