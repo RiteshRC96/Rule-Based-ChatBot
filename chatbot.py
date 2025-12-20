@@ -70,7 +70,7 @@ class SmartChatBot:
         # ✅ Updated model name to the supported one
         self.llm = ChatGroq(
             groq_api_key=groq_api_key,
-            model="llama3-70b-8192"  # <--- Updated model name here
+            model="llama-3.1-8b-instant"  # <--- Updated model name here
         )
 
         self.template = PromptTemplate.from_template(
