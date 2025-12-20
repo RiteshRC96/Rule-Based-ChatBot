@@ -13,7 +13,7 @@ user_avatar = image_to_base64("static/user.png")
 bot_avatar = image_to_base64("static/bot.png")
 
 # Initialize bot
-groq_api_key = "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"
+groq_api_key = "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"
 bot = SmartChatBot(groq_api_key)
 
 # Page config
